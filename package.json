@@ -1,6 +1,6 @@
 {
-  "name": "arthaya-access",
-  "version": "2.1.0",
+  "name": "e-commerce",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "vite",
