@@ -2,32 +2,59 @@
   <v-app :theme="theme">
     <!-- Header -->
     <v-app-bar app flat class="px-3 header-gradient" elevation="1">
-      <v-app-bar-title class="text-h5 font-weight-bold d-flex align-center">
+      <v-responsive class="d-flex align-center">
         <v-icon icon="mdi-leaf" class="mr-2" color="light-green-darken-3"></v-icon>
-        FreshScent
-      </v-app-bar-title>
+        <v-app-bar-title class="text-h5 font-weight-bold d-none d-sm-flex">
+          FreshScent
+        </v-app-bar-title>
+        <v-app-bar-title class="text-h6 font-weight-bold d-flex d-sm-none">
+          FSSS
+        </v-app-bar-title>
+      </v-responsive>
 
       <v-spacer></v-spacer>
 
-      <v-app-bar-nav-icon @click="drawer = !drawer" class="hidden-md-and-up"></v-app-bar-nav-icon>
+      <!-- Search bar with category dropdown - visible on larger screens -->
+      <div class="d-none d-md-flex align-center mx-4">
+        <v-select v-model="selectedCategory" :items="categories" label="Category" density="compact" variant="outlined"
+          hide-details class="mr-2" style="max-width: 150px;"></v-select>
+        <v-text-field v-model="searchQuery" label="Search products" prepend-inner-icon="mdi-magnify" density="compact"
+          variant="outlined" hide-details style="width: 200px;"></v-text-field>
+      </div>
 
-      <div class="hidden-sm-and-down">
-        <v-btn v-for="item in menuItems" :key="item" text class="mx-1" :class="{ 'v-btn--active': item === activeItem }"
-          @click="activeItem = item">
+      <!-- Menu items - visible on larger screens -->
+      <div class="d-none d-md-flex">
+        <v-btn v-for="item in menuItems" :key="item" variant="text" class="mx-1"
+          :class="{ 'v-btn--active': item === activeItem }" @click="activeItem = item">
           {{ item }}
         </v-btn>
-
-        <v-btn icon="mdi-shopping-outline" class="ml-2"></v-btn>
-
-        <v-btn :icon="theme === 'light' ? 'mdi-weather-night' : 'mdi-weather-sunny'" @click="toggleTheme"
-          class="ml-2"></v-btn>
       </div>
+
+      <!-- Icons - always visible -->
+      <v-btn icon="mdi-shopping-outline" class="ml-2"></v-btn>
+      <v-btn :icon="theme === 'light' ? 'mdi-weather-night' : 'mdi-weather-sunny'" @click="toggleTheme"
+        class="ml-2"></v-btn>
+
+      <!-- Mobile menu icon -->
+      <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none"></v-app-bar-nav-icon>
     </v-app-bar>
 
+    <!-- Navigation drawer for mobile -->
     <v-navigation-drawer v-model="drawer" temporary>
       <v-list>
-        <v-list-item v-for="item in menuItems" :key="item" :title="item" link @click="activeItem = item"
-          :class="{ 'bg-primary': item === activeItem }"></v-list-item>
+        <v-list-item v-for="item in menuItems" :key="item" :title="item"
+          @click="activeItem = item; drawer = false"></v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list>
+        <v-list-item>
+          <v-select v-model="selectedCategory" :items="categories" label="Category" density="compact" variant="outlined"
+            hide-details></v-select>
+        </v-list-item>
+        <v-list-item>
+          <v-text-field v-model="searchQuery" label="Search products" prepend-inner-icon="mdi-magnify" density="compact"
+            variant="outlined" hide-details></v-text-field>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -87,13 +114,27 @@ const menuItems = ['Home', 'Services', 'About', 'Contact']
 const socialIcons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram', 'mdi-linkedin']
 const activeItem = ref('Home')
 
+const categories = [
+  { title: 'All Categories', value: 'all' },
+  { title: 'Home Fragrances', value: 'home' },
+  { title: 'Personal Care', value: 'personal' },
+  { title: 'Aromatherapy', value: 'aromatherapy' },
+  { title: 'Seasonal Scents', value: 'seasonal' }
+];
+const selectedCategory = ref('all');
+const searchQuery = ref('');
+
 function toggleTheme() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
 
 </script>
 
-<style>
+<style scoped>
+.v-select {
+  max-width: 150px;
+}
+
 .v-application {
   font-family: 'Roboto', sans-serif;
 }
