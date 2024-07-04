@@ -56,6 +56,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
       '@core': fileURLToPath(new URL('./resources/js/@core', import.meta.url)),
       '@layouts': fileURLToPath(new URL('./resources/js/@layouts', import.meta.url)),
+      '@components': fileURLToPath(new URL('./resources/js/components', import.meta.url)),
+      '@assets': fileURLToPath(new URL('./resources/js/assets', import.meta.url)),
       '@images': fileURLToPath(new URL('./resources/images/', import.meta.url)),
       '@styles': fileURLToPath(new URL('./resources/styles/', import.meta.url)),
       '@configured-variables': fileURLToPath(new URL('./resources/styles/variables/_template.scss', import.meta.url)),
