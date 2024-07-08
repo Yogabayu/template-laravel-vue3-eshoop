@@ -108,8 +108,17 @@
       <v-container fluid class="on-sale-section py-12">
         <v-row justify="center">
           <v-col cols="12" class="text-center mb-8">
-            <h2 class="text-h3 font-weight-bold white--text">Hot Deals</h2>
-            <p class="text-h6 white--text mt-2">Limited Time Offers on Premium Scents</p>
+            <div class="d-flex align-center justify-center mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="text-white mr-2">
+                <path
+                  d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z">
+                </path>
+              </svg>
+              <h2 class="text-h3 font-weight-bold text-white">Hot Deals</h2>
+            </div>
+            <p class="text-h6 text-white mt-2">Limited Time Offers on Premium Scents</p>
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -140,6 +149,51 @@
                 </v-card-actions>
               </v-card>
             </v-hover>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <!-- Today for You Section -->
+      <v-container fluid class="today-for-you-section py-12">
+        <v-row align="center" justify="space-between" class="mb-6">
+          <v-col cols="12" sm="4">
+            <h2 class="text-h3 font-weight-bold">Today's For You!</h2>
+          </v-col>
+          <v-col cols="12" sm="8">
+            <v-chip-group v-model="selectedCategory" class="justify-end">
+              <v-chip v-for="category in categories" :key="category.value" :value="category.value"
+                :color="selectedCategory === category.value ? 'primary' : undefined"
+                :variant="selectedCategory === category.value ? 'elevated' : 'outlined'">
+                {{ category.title }}
+              </v-chip>
+            </v-chip-group>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col v-for="(item, index) in todayForYouItems" :key="index" cols="12" sm="6" md="3">
+            <v-card class="mx-auto" max-width="374">
+              <v-img :src="item.image" height="250" cover>
+                <template v-slot:placeholder>
+                  <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-card-title>{{ item.name }}</v-card-title>
+              <v-card-text>
+                <v-row align="center" class="mx-0">
+                  <v-rating :model-value="item.rating" color="amber" dense half-increments readonly
+                    size="14"></v-rating>
+                  <div class="grey--text ms-4">{{ item.soldCount }} Sold</div>
+                </v-row>
+                <div class="my-4 text-subtitle-1">
+                  <span class="font-weight-bold">{{ item.price }}</span>
+                  <span v-if="item.originalPrice" class="text-decoration-line-through ms-2 text-caption grey--text">
+                    {{ item.originalPrice }}
+                  </span>
+                </div>
+              </v-card-text>
+            </v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -237,7 +291,40 @@ const categoriesList = ref([
   { name: 'Car Fresheners', icon: 'mdi-car' },
   { name: 'Seasonal Scents', icon: 'mdi-leaf' },
   { name: 'Custom Blends', icon: 'mdi-flask-empty-outline' },
-])
+]);
+
+const todayForYouItems = ref([
+  {
+    name: "UrbanEdge Men's Jeans Collection",
+    image: "path_to_jeans_image.jpg",
+    rating: 4.9,
+    soldCount: "10K+",
+    price: "Rp253.000",
+    originalPrice: "Rp370.000"
+  },
+  {
+    name: "Essentials Men's Long-Sleeve Oxford Shirt",
+    image: "path_to_shirt_image.jpg",
+    rating: 4.9,
+    soldCount: "10K+",
+    price: "Rp179.000"
+  },
+  {
+    name: "StyleHaven Men's Fashionable Brogues",
+    image: "path_to_shoes_image.jpg",
+    rating: 4.9,
+    soldCount: "8K+",
+    price: "Rp199.000",
+    originalPrice: "Rp325.000"
+  },
+  {
+    name: "Essential Long-Sleeve Crewneck Shirt for Men",
+    image: "path_to_crewneck_image.jpg",
+    rating: 4.9,
+    soldCount: "5K+",
+    price: "Rp120.000"
+  }
+]);
 
 const displayedCategories = computed(() => categoriesList.value.slice(0, 5))
 
@@ -261,6 +348,22 @@ const slides = ref([
 </script>
 
 <style scoped>
+.on-sale-section {
+  background-color: #2c3e50;
+  /* You can adjust this color to match your design */
+}
+
+.today-for-you-section {
+  background-color: #f5f5f5;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .v-select {
   max-width: 150px;
 }
@@ -301,10 +404,6 @@ const slides = ref([
 
 .carousel-indicators .v-btn.active {
   opacity: 1;
-}
-
-.on-sale-section {
-  background: linear-gradient(to right, #be594e, #c2e753);
 }
 
 .on-hover {
