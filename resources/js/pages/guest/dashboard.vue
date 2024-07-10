@@ -60,7 +60,7 @@
 
     <!-- Main Content -->
     <v-main>
-      <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background show-arrows="hover">
+      <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background show-arrows="hover" class="on-sale-section">
         <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.img" cover>
           <v-container class="fill-height" fluid>
             <v-row align="center" justify="center">
@@ -90,13 +90,13 @@
       <v-container class="py-12">
         <v-row justify="center">
           <v-col v-for="(category, index) in displayedCategories" :key="index" cols="6" sm="4" md="3" lg="2">
-            <v-card class="text-center pa-4" flat>
+            <v-card class="text-center pa-4 custom-rounded" flat>
               <v-icon :icon="category.icon" size="x-large" color="primary" class="mb-4"></v-icon>
               <h3 class="text-subtitle-1">{{ category.name }}</h3>
             </v-card>
           </v-col>
           <v-col v-if="categoriesList.length > 5" cols="6" sm="4" md="3" lg="2">
-            <v-card class="text-center pa-4" flat @click="showAllCategories">
+            <v-card class="text-center pa-4 custom-rounded" flat @click="showAllCategories">
               <v-icon icon="mdi-dots-horizontal" size="x-large" color="grey" class="mb-4"></v-icon>
               <h3 class="text-subtitle-1">More Categories</h3>
             </v-card>
@@ -105,7 +105,7 @@
       </v-container>
 
       <!-- On Sale Section -->
-      <v-container fluid class="on-sale-section py-12">
+      <v-container fluid class="on-sale-section py-12 custom-rounded">
         <v-row justify="center">
           <v-col cols="12" class="text-center mb-8">
             <div class="d-flex align-center justify-center mb-2">
@@ -194,6 +194,22 @@
                 </div>
               </v-card-text>
             </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <!-- Shop Beyond Boundaries Section -->
+      <!-- Shop Beyond Boundaries Section -->
+      <v-container fluid class="shop-beyond-boundaries-section py-12">
+        <v-row justify="center">
+          <v-col cols="12">
+            <v-img src="https://picsum.photos/1600/900" alt="Let's Shop Beyond Boundaries" height="300" class="custom-rounded" cover>
+              <v-row align="center" justify="center" class="fill-height">
+                <v-col cols="12" class="text-center">
+                  <h2 class="text-h2 font-weight-bold text-white">"Let's Shop Beyond Boundaries"</h2>
+                </v-col>
+              </v-row>
+            </v-img>
           </v-col>
         </v-row>
       </v-container>
@@ -409,5 +425,9 @@ const slides = ref([
 .on-hover {
   transform: scale(1.05);
   transition: all 0.3s ease-in-out;
+}
+
+.custom-rounded {
+  border-radius: 20px;  /* Adjust this value to your preference */
 }
 </style>
