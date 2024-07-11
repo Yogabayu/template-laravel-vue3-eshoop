@@ -14,11 +14,21 @@ const router = createRouter({
     },
     {
       path: "/dashboard",
-      component: () => import("../layouts/blank.vue"),
+      component: () => import("../layouts/guest/App.vue"),
       children: [
         {
           path: "",
           component: () => import("../pages/guest/dashboard.vue"),
+        },
+      ],
+    },
+    {
+      path: "/service",
+      component: () => import("../layouts/guest/App.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("../pages/guest/service.vue"),
         },
       ],
     },

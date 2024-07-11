@@ -1,262 +1,168 @@
 <template>
-  <v-app :theme="theme">
-    <!-- Header -->
-    <v-app-bar app flat class="px-3 header-gradient" elevation="1">
-      <v-responsive class="d-flex align-center">
-        <v-icon icon="mdi-leaf" class="mr-2" color="light-green-darken-3"></v-icon>
-        <v-app-bar-title class="text-h5 font-weight-bold d-none d-sm-flex">
-          FreshScent
-        </v-app-bar-title>
-        <v-app-bar-title class="text-h6 font-weight-bold d-flex d-sm-none">
-          FSSS
-        </v-app-bar-title>
-      </v-responsive>
+  <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background show-arrows="hover"
+    class="on-sale-section">
+    <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.img" cover>
+      <v-container class="fill-height" fluid>
+        <v-row align="center" justify="center">
+          <v-col cols="12" md="6">
+            <h1 class="text-h3 font-weight-bold mb-4 text-white">Transform Your Space with FreshScent</h1>
+            <p class="text-body-1 mb-6 text-white">Experience the power of premium fragrances tailored for your
+              environment.
+              Elevate your atmosphere with our professional scenting solutions.</p>
+            <v-btn color="secondary" size="large" class="mr-4">Explore Services</v-btn>
+            <v-btn color="white" variant="outlined" size="large">Contact Us</v-btn>
+          </v-col>
+          <v-col cols="12" md="6" class="text-center">
+            <v-img src="https://via.placeholder.com/500x300" alt="Scent diffuser" class="rounded-lg"></v-img>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-carousel-item>
 
-      <v-spacer></v-spacer>
-
-      <!-- Search bar with category dropdown - visible on larger screens -->
-      <div class="d-none d-md-flex align-center mx-4">
-        <v-select v-model="selectedCategory" :items="categories" label="Category" density="compact" variant="outlined"
-          hide-details class="mr-2" style="max-width: 150px;"></v-select>
-        <v-text-field v-model="searchQuery" label="Search products" prepend-inner-icon="mdi-magnify" density="compact"
-          variant="outlined" hide-details style="width: 200px;"></v-text-field>
+    <template v-slot:append>
+      <div class="carousel-indicators">
+        <v-btn v-for="(slide, i) in slides" :key="i" icon="mdi-circle" :class="{ 'active': i === currentSlide }"
+          @click="currentSlide = i"></v-btn>
       </div>
+    </template>
+  </v-carousel>
 
-      <!-- Menu items - visible on larger screens -->
-      <div class="d-none d-md-flex">
-        <v-btn v-for="item in menuItems" :key="item" variant="text" class="mx-1"
-          :class="{ 'v-btn--active': item === activeItem }" @click="activeItem = item">
-          {{ item }}
-        </v-btn>
-      </div>
+  <v-container class="py-12">
+    <v-row justify="center">
+      <v-col v-for="(category, index) in displayedCategories" :key="index" cols="6" sm="4" md="3" lg="2">
+        <v-card class="text-center pa-4 custom-rounded" flat>
+          <v-icon :icon="category.icon" size="x-large" color="primary" class="mb-4"></v-icon>
+          <h3 class="text-subtitle-1">{{ category.name }}</h3>
+        </v-card>
+      </v-col>
+      <v-col v-if="categoriesList.length > 5" cols="6" sm="4" md="3" lg="2">
+        <v-card class="text-center pa-4 custom-rounded" flat @click="showAllCategories">
+          <v-icon icon="mdi-dots-horizontal" size="x-large" color="grey" class="mb-4"></v-icon>
+          <h3 class="text-subtitle-1">More Categories</h3>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 
-      <!-- Icons - always visible -->
-      <v-btn icon="mdi-shopping-outline" class="ml-2"></v-btn>
-      <v-btn :icon="theme === 'light' ? 'mdi-weather-night' : 'mdi-weather-sunny'" @click="toggleTheme"
-        class="ml-2"></v-btn>
-
-      <!-- Mobile menu icon -->
-      <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none"></v-app-bar-nav-icon>
-    </v-app-bar>
-
-    <!-- Navigation drawer for mobile -->
-    <v-navigation-drawer v-model="drawer" temporary>
-      <v-list>
-        <v-list-item v-for="item in menuItems" :key="item" :title="item"
-          @click="activeItem = item; drawer = false"></v-list-item>
-      </v-list>
-      <v-divider></v-divider>
-      <v-list>
-        <v-list-item>
-          <v-select v-model="selectedCategory" :items="categories" label="Category" density="compact" variant="outlined"
-            hide-details></v-select>
-        </v-list-item>
-        <v-list-item>
-          <v-text-field v-model="searchQuery" label="Search products" prepend-inner-icon="mdi-magnify" density="compact"
-            variant="outlined" hide-details></v-text-field>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <!-- Main Content -->
-    <v-main>
-      <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background show-arrows="hover" class="on-sale-section">
-        <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.img" cover>
-          <v-container class="fill-height" fluid>
-            <v-row align="center" justify="center">
-              <v-col cols="12" md="6">
-                <h1 class="text-h3 font-weight-bold mb-4 text-white">Transform Your Space with FreshScent</h1>
-                <p class="text-body-1 mb-6 text-white">Experience the power of premium fragrances tailored for your
-                  environment.
-                  Elevate your atmosphere with our professional scenting solutions.</p>
-                <v-btn color="secondary" size="large" class="mr-4">Explore Services</v-btn>
-                <v-btn color="white" variant="outlined" size="large">Contact Us</v-btn>
-              </v-col>
-              <v-col cols="12" md="6" class="text-center">
-                <v-img src="https://via.placeholder.com/500x300" alt="Scent diffuser" class="rounded-lg"></v-img>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-carousel-item>
-
-        <template v-slot:append>
-          <div class="carousel-indicators">
-            <v-btn v-for="(slide, i) in slides" :key="i" icon="mdi-circle" :class="{ 'active': i === currentSlide }"
-              @click="currentSlide = i"></v-btn>
-          </div>
-        </template>
-      </v-carousel>
-
-      <v-container class="py-12">
-        <v-row justify="center">
-          <v-col v-for="(category, index) in displayedCategories" :key="index" cols="6" sm="4" md="3" lg="2">
-            <v-card class="text-center pa-4 custom-rounded" flat>
-              <v-icon :icon="category.icon" size="x-large" color="primary" class="mb-4"></v-icon>
-              <h3 class="text-subtitle-1">{{ category.name }}</h3>
-            </v-card>
-          </v-col>
-          <v-col v-if="categoriesList.length > 5" cols="6" sm="4" md="3" lg="2">
-            <v-card class="text-center pa-4 custom-rounded" flat @click="showAllCategories">
-              <v-icon icon="mdi-dots-horizontal" size="x-large" color="grey" class="mb-4"></v-icon>
-              <h3 class="text-subtitle-1">More Categories</h3>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <!-- On Sale Section -->
-      <v-container fluid class="on-sale-section py-12 custom-rounded">
-        <v-row justify="center">
-          <v-col cols="12" class="text-center mb-8">
-            <div class="d-flex align-center justify-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="text-white mr-2">
-                <path
-                  d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z">
-                </path>
-              </svg>
-              <h2 class="text-h3 font-weight-bold text-white">Hot Deals</h2>
-            </div>
-            <p class="text-h6 text-white mt-2">Limited Time Offers on Premium Scents</p>
-          </v-col>
-        </v-row>
-        <v-row justify="center">
-          <v-col v-for="(item, index) in saleItems" :key="index" cols="12" sm="6" md="4" lg="3">
-            <v-hover v-slot="{ isHovering, props }">
-              <v-card class="mx-auto" max-width="374" v-bind="props" :elevation="isHovering ? 12 : 2"
-                :class="{ 'on-hover': isHovering }">
-                <v-img :src="item.image" height="250" cover class="align-end">
-                  <v-card-title class="text-white bg-black bg-opacity-50">
-                    {{ item.name }}
-                  </v-card-title>
-                </v-img>
-                <v-card-text>
-                  <div class="d-flex justify-space-between align-center mt-2">
-                    <div>
-                      <span class="text-h5 font-weight-bold primary--text">${{ item.salePrice }}</span>
-                      <span class="text-body-2 text-decoration-line-through ml-2">${{ item.originalPrice }}</span>
-                    </div>
-                    <v-chip color="error" label>{{ item.discount }}% OFF</v-chip>
-                  </div>
-                  <div class="mt-4">{{ item.description }}</div>
-                </v-card-text>
-                <v-divider class="mx-4"></v-divider>
-                <v-card-actions>
-                  <v-btn color="primary" variant="tonal" block>
-                    Add to Cart
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-hover>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <!-- Today for You Section -->
-      <v-container fluid class="today-for-you-section py-12">
-        <v-row align="center" justify="space-between" class="mb-6">
-          <v-col cols="12" sm="4">
-            <h2 class="text-h3 font-weight-bold">Today's For You!</h2>
-          </v-col>
-          <v-col cols="12" sm="8">
-            <v-chip-group v-model="selectedCategory" class="justify-end">
-              <v-chip v-for="category in categories" :key="category.value" :value="category.value"
-                :color="selectedCategory === category.value ? 'primary' : undefined"
-                :variant="selectedCategory === category.value ? 'elevated' : 'outlined'">
-                {{ category.title }}
-              </v-chip>
-            </v-chip-group>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col v-for="(item, index) in todayForYouItems" :key="index" cols="12" sm="6" md="3">
-            <v-card class="mx-auto" max-width="374">
-              <v-img :src="item.image" height="250" cover>
-                <template v-slot:placeholder>
-                  <v-row class="fill-height ma-0" align="center" justify="center">
-                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                  </v-row>
-                </template>
-              </v-img>
-              <v-card-title>{{ item.name }}</v-card-title>
-              <v-card-text>
-                <v-row align="center" class="mx-0">
-                  <v-rating :model-value="item.rating" color="amber" dense half-increments readonly
-                    size="14"></v-rating>
-                  <div class="grey--text ms-4">{{ item.soldCount }} Sold</div>
-                </v-row>
-                <div class="my-4 text-subtitle-1">
-                  <span class="font-weight-bold">{{ item.price }}</span>
-                  <span v-if="item.originalPrice" class="text-decoration-line-through ms-2 text-caption grey--text">
-                    {{ item.originalPrice }}
-                  </span>
-                </div>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <!-- Shop Beyond Boundaries Section -->
-      <!-- Shop Beyond Boundaries Section -->
-      <v-container fluid class="shop-beyond-boundaries-section py-12">
-        <v-row justify="center">
-          <v-col cols="12">
-            <v-img src="https://picsum.photos/1600/900" alt="Let's Shop Beyond Boundaries" height="300" class="custom-rounded" cover>
-              <v-row align="center" justify="center" class="fill-height">
-                <v-col cols="12" class="text-center">
-                  <h2 class="text-h2 font-weight-bold text-white">"Let's Shop Beyond Boundaries"</h2>
-                </v-col>
-              </v-row>
+  <!-- On Sale Section -->
+  <v-container class="on-sale-section py-12 custom-rounded mb-2">
+    <v-row justify="center">
+      <v-col cols="12" class="text-center mb-8">
+        <div class="d-flex align-center justify-center mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="text-white mr-2">
+            <path
+              d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z">
+            </path>
+          </svg>
+          <h2 class="text-h3 font-weight-bold text-white">Hot Deals</h2>
+        </div>
+        <p class="text-h6 text-white mt-2">Limited Time Offers on Premium Scents</p>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col v-for="(item, index) in saleItems" :key="index" cols="6" sm="6" md="4" lg="3">
+        <v-hover v-slot="{ isHovering, props }">
+          <v-card class="mx-auto" max-width="374" v-bind="props" :elevation="isHovering ? 12 : 2"
+            :class="{ 'on-hover': isHovering }">
+            <v-img :src="item.image" height="200" cover class="align-end">
+              <v-card-title class="text-white bg-black bg-opacity-50 text-subtitle-1">
+                {{ item.name }}
+              </v-card-title>
             </v-img>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
+            <v-card-text>
+              <div class="d-flex justify-space-between align-center mt-2">
+                <div>
+                  <span class="text-h6 font-weight-bold primary--text">${{ item.salePrice }}</span>
+                  <span class="text-caption text-decoration-line-through ml-1">${{ item.originalPrice }}</span>
+                </div>
+                <v-chip color="error" label size="small">{{ item.discount }}% OFF</v-chip>
+              </div>
+              <div class="mt-2 text-caption">{{ item.description }}</div>
+            </v-card-text>
+            <v-divider class="mx-4"></v-divider>
+            <v-card-actions>
+              <v-btn color="primary" variant="tonal" block size="small">
+                Add to Cart
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-hover>
+      </v-col>
+    </v-row>
+  </v-container>
 
-    <!-- Footer -->
-    <v-footer app class="pa-6">
-      <v-row justify="center" no-gutters>
-        <v-col cols="12" sm="4" class="mb-4">
-          <h3 class="text-h6 mb-3 font-weight-bold">About Us</h3>
-          <p class="text-body-2">FreshScent is a leading provider of premium scenting solutions. We transform spaces
-            with carefully crafted fragrances, enhancing environments for businesses and homes alike.</p>
-        </v-col>
-        <v-col cols="12" sm="4" class="mb-4">
-          <h3 class="text-h6 mb-3 font-weight-bold">Connect With Us</h3>
-          <div class="d-flex mb-3">
-            <v-icon v-for="icon in socialIcons" :key="icon" :icon="icon" class="mr-4" size="24"></v-icon>
-          </div>
-          <p class="text-body-2">Follow us for the latest updates and fresh inspiration!</p>
-        </v-col>
-        <v-col cols="12" sm="4" class="mb-4">
-          <h3 class="text-h6 mb-3 font-weight-bold">Newsletter</h3>
-          <v-text-field label="Enter your email" append-inner-icon="mdi-send" variant="outlined" density="comfortable"
-            bg-color="primary-lighten-1"></v-text-field>
-          <p class="text-caption mt-2">Subscribe to receive exclusive offers and news.</p>
-        </v-col>
-        <v-col cols="12" class="text-center mt-4">
-          <p class="text-caption">&copy; {{ new Date().getFullYear() }} FreshScent. Breathe in the difference.</p>
-        </v-col>
-      </v-row>
-    </v-footer>
-  </v-app>
+  <!-- Today for You Section -->
+  <v-container fluid class="today-for-you-section py-12">
+    <v-row align="center" justify="space-between" class="mb-6">
+      <v-col cols="12" sm="4">
+        <h2 class="text-h3 font-weight-bold" :class="$vuetify.theme.dark ? 'text-white' : 'text-black'">Today's For You!
+        </h2>
+      </v-col>
+      <v-col cols="12" sm="8">
+        <v-chip-group v-model="selectedCategory" class="justify-end"
+          :class="$vuetify.theme.dark ? 'text-white' : 'text-black'">
+          <v-chip v-for="category in categories" :key="category.value" :value="category.value"
+            :color="selectedCategory === category.value ? 'primary' : undefined"
+            :variant="selectedCategory === category.value ? 'elevated' : 'outlined'">
+            {{ category.title }}
+          </v-chip>
+        </v-chip-group>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col v-for="(item, index) in todayForYouItems" :key="index" cols="12" sm="6" md="3">
+        <v-card class="mx-auto" max-width="374">
+          <v-img :src="item.image" height="250" cover>
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+          <v-card-title>{{ item.name }}</v-card-title>
+          <v-card-text>
+            <v-row align="center" class="mx-0">
+              <v-rating :model-value="item.rating" color="amber" dense half-increments readonly size="14"></v-rating>
+              <div class="grey--text ms-4">{{ item.soldCount }} Sold</div>
+            </v-row>
+            <div class="my-4 text-subtitle-1">
+              <span class="font-weight-bold">{{ item.price }}</span>
+              <span v-if="item.originalPrice" class="text-decoration-line-through ms-2 text-caption grey--text">
+                {{ item.originalPrice }}
+              </span>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+
+  <!-- Shop Beyond Boundaries Section -->
+  <v-container fluid class="shop-beyond-boundaries-section py-12">
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-img src="https://picsum.photos/1600/900" alt="Let's Shop Beyond Boundaries" height="300"
+          class="custom-rounded" cover>
+          <v-row align="center" justify="center" class="fill-height">
+            <v-col cols="12" class="text-center">
+              <h2 class="text-h2 font-weight-bold text-white">"Let's Shop Beyond Boundaries"</h2>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue';
 
-const theme = ref('light')
-const drawer = ref(false)
-const menuItems = ['Home', 'Services', 'About', 'Contact']
-const socialIcons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram', 'mdi-linkedin']
-const activeItem = ref('Home')
-
 const saleItems = ref([
   {
     name: "Lavender Dream",
-    image: "https://via.placeholder.com/374x250?text=Lavender+Dream",
+    image: "https://picsum.photos/1920/1080/",
     originalPrice: 59.99,
     salePrice: 39.99,
     discount: 33,
@@ -264,7 +170,7 @@ const saleItems = ref([
   },
   {
     name: "Citrus Burst",
-    image: "https://via.placeholder.com/374x250?text=Citrus+Burst",
+    image: "https://picsum.photos/1920/1080/",
     originalPrice: 49.99,
     salePrice: 34.99,
     discount: 30,
@@ -272,7 +178,7 @@ const saleItems = ref([
   },
   {
     name: "Ocean Breeze",
-    image: "https://via.placeholder.com/374x250?text=Ocean+Breeze",
+    image: "https://picsum.photos/1920/1080/",
     originalPrice: 54.99,
     salePrice: 41.99,
     discount: 24,
@@ -280,7 +186,7 @@ const saleItems = ref([
   },
   {
     name: "Vanilla Comfort",
-    image: "https://via.placeholder.com/374x250?text=Vanilla+Comfort",
+    image: "https://picsum.photos/1920/1080/",
     originalPrice: 44.99,
     salePrice: 29.99,
     discount: 33,
@@ -312,7 +218,7 @@ const categoriesList = ref([
 const todayForYouItems = ref([
   {
     name: "UrbanEdge Men's Jeans Collection",
-    image: "path_to_jeans_image.jpg",
+    image: "https://picsum.photos/1920/1080/",
     rating: 4.9,
     soldCount: "10K+",
     price: "Rp253.000",
@@ -320,14 +226,14 @@ const todayForYouItems = ref([
   },
   {
     name: "Essentials Men's Long-Sleeve Oxford Shirt",
-    image: "path_to_shirt_image.jpg",
+    image: "https://picsum.photos/1920/1080/",
     rating: 4.9,
     soldCount: "10K+",
     price: "Rp179.000"
   },
   {
     name: "StyleHaven Men's Fashionable Brogues",
-    image: "path_to_shoes_image.jpg",
+    image: "https://picsum.photos/1920/1080/",
     rating: 4.9,
     soldCount: "8K+",
     price: "Rp199.000",
@@ -335,7 +241,7 @@ const todayForYouItems = ref([
   },
   {
     name: "Essential Long-Sleeve Crewneck Shirt for Men",
-    image: "path_to_crewneck_image.jpg",
+    image: "https://picsum.photos/1920/1080/",
     rating: 4.9,
     soldCount: "5K+",
     price: "Rp120.000"
@@ -349,24 +255,38 @@ const showAllCategories = () => {
   console.log('Show all categories')
 }
 const selectedCategory = ref('all');
-const searchQuery = ref('');
-
-function toggleTheme() {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
-}
 
 const currentSlide = ref(0)
 const slides = ref([
-  { img: 'https://picsum.photos/1920/1080/?blur' },
-  { img: 'https://picsum.photos/1920/1080/?blur' },
-  { img: 'https://picsum.photos/1920/1080/?blur' },
+  { img: 'https://picsum.photos/1920/1080/' },
+  { img: 'https://picsum.photos/1920/1080/' },
+  { img: 'https://picsum.photos/1920/1080/' },
 ])
 </script>
 
 <style scoped>
+/* Tambahkan gaya responsif tambahan jika diperlukan */
+@media (max-width: 600px) {
+  .v-card-title {
+    font-size: 1rem !important;
+  }
+  .v-card-text {
+    font-size: 0.875rem;
+  }
+  .text-h6 {
+    font-size: 1rem !important;
+  }
+}
+.text-white {
+  color: #FFFFFF !important;
+}
+
+.text-black {
+  color: #000000 !important;
+}
+
 .on-sale-section {
   background-color: #2c3e50;
-  /* You can adjust this color to match your design */
 }
 
 .today-for-you-section {
@@ -428,6 +348,7 @@ const slides = ref([
 }
 
 .custom-rounded {
-  border-radius: 20px;  /* Adjust this value to your preference */
+  border-radius: 20px;
+  /* Adjust this value to your preference */
 }
 </style>
