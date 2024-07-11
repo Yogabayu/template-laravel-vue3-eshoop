@@ -21,10 +21,16 @@
         </div>
 
         <!-- Menu items - visible on larger screens -->
-        <div class="d-none d-md-flex">
+        <!-- <div class="d-none d-md-flex">
             <v-btn v-for="item in menuItems" :key="item" variant="text" class="mx-1"
                 :class="{ 'v-btn--active': item === activeItem }" @click="activeItem = item">
                 {{ item }}
+            </v-btn>
+        </div> -->
+        <div class="d-none d-md-flex">
+            <v-btn v-for="item in menuItems" :key="item.title" variant="text" class="mx-1"
+                :class="{ 'v-btn--active': $route.path === item.value }" :to="item.value">
+                {{ item.title }}
             </v-btn>
         </div>
 
@@ -40,11 +46,18 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const props = defineProps(['theme']);
 const emit = defineEmits(['toggle-drawer', 'toggle-theme']);
-
-const menuItems = ['Home', 'Services', 'About', 'Contact'];
+const route = useRoute();
+// const menuItems = ['Home', 'Services', 'About', 'Contact'];
+const menuItems = [
+    { title: 'Home', value: '/dashboard' },
+    { title: 'Services', value: '/service' },
+    { title: 'About', value: '' },
+    { title: 'Contract', value: '' },
+];
 const activeItem = ref('Home');
 const selectedCategory = ref('all');
 const searchQuery = ref('');
@@ -60,3 +73,9 @@ function toggleTheme() {
     emit('toggle-theme');
 }
 </script>
+
+<style scoped>
+.v-btn--active {
+    border-bottom: 2px solid currentColor;
+}
+</style>
