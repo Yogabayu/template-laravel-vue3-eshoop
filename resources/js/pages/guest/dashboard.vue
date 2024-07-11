@@ -13,7 +13,7 @@
             <v-btn color="white" variant="outlined" size="large">Contact Us</v-btn>
           </v-col>
           <v-col cols="12" md="6" class="text-center">
-            <v-img src="https://via.placeholder.com/500x300" alt="Scent diffuser" class="rounded-lg"></v-img>
+            <v-img src="https://via.placeholder.com/500x300" alt="Scent diffuser" class="rounded-lg" ></v-img>
           </v-col>
         </v-row>
       </v-container>
@@ -66,7 +66,13 @@
         <v-hover v-slot="{ isHovering, props }">
           <v-card class="mx-auto" max-width="374" v-bind="props" :elevation="isHovering ? 12 : 2"
             :class="{ 'on-hover': isHovering }">
-            <v-img :src="item.image" height="200" cover class="align-end">
+            <v-img :src="item.image" height="200" cover class="align-end" 
+            :lazy-src="item.image">
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+              </v-row>
+            </template>
               <v-card-title class="text-white bg-black bg-opacity-50 text-subtitle-1">
                 {{ item.name }}
               </v-card-title>
@@ -114,7 +120,7 @@
     <v-row>
       <v-col v-for="(item, index) in todayForYouItems" :key="index" cols="12" sm="6" md="3">
         <v-card class="mx-auto" max-width="374">
-          <v-img :src="item.image" height="250" cover>
+          <v-img :src="item.image" height="250" cover :lazy-src="item.image">
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
