@@ -55,7 +55,7 @@ const route = useRoute();
 const menuItems = [
     { title: 'Home', value: '/dashboard' },
     { title: 'Services', value: '/service' },
-    { title: 'About', value: '' },
+    { title: 'Shop', value: '/shop' },
     { title: 'Contract', value: '' },
 ];
 const activeItem = ref('Home');

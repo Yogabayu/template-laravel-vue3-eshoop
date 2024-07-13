@@ -31,6 +31,16 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: "/shop",
+      component: () => import("../layouts/guest/App.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("../pages/guest/shop.vue"),
+        },
+      ],
+    },
     // {
     //   path: "/login",
     //   component: () => import("../layouts/blank.vue"),
