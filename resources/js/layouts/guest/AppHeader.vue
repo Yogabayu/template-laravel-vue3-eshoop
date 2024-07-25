@@ -35,7 +35,7 @@
         </div>
 
         <!-- Icons - always visible -->
-        <v-btn icon="mdi-shopping-outline" class="ml-2"></v-btn>
+        <v-btn icon="mdi-shopping-outline" class="ml-2" :to="'/cart'"></v-btn>
         <v-btn :icon="theme === 'light' ? 'mdi-weather-night' : 'mdi-weather-sunny'" @click="toggleTheme"
             class="ml-2"></v-btn>
 
