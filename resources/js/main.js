@@ -24,22 +24,6 @@ app.component('EasyDataTable', Vue3EasyDataTable);
 app.use(createPinia())
 app.use(router)
 
-app.config.globalProperties.$handleRightClick =(event)=>{
-  event.preventDefault();
-};
-
-app.directive('prevent-right-click', {
-  beforeMount: (el, binding) => {
-    el.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-    });
-  },
-  unmounted: (el,binding) => {
-    el.removeEventListener('contextmenu', binding.value);
-  },
-});
-
-
 // Mount vue app
 app.mount('#app')
 

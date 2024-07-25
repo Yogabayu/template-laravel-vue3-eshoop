@@ -56,7 +56,6 @@ const menuItems = [
     { title: 'Home', value: '/dashboard' },
     { title: 'Services', value: '/service' },
     { title: 'Shop', value: '/shop' },
-    { title: 'Contract', value: '' },
 ];
 const activeItem = ref('Home');
 const selectedCategory = ref('all');

@@ -1,5 +1,5 @@
 <template>
-  <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background show-arrows="hover"
+  <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background :show-arrows="false"
     class="on-sale-section">
     <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.img" cover>
       <v-container class="fill-height" fluid>
