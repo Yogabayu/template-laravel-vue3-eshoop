@@ -151,13 +151,13 @@ const cartItems = ref([
     {
         id: 1,
         selected: false,
-        product: { name: '(UMU SUPPLIER) DOUBLEPOW CHARGER BATERAI 4 SLOTS FOR...', price: 50000 },
+        product: { name: '(UMU SUPPLIER) DOUBLEPOW CHARGER BATERAI 4 SLOTS', price: 50000 },
         quantity: 1,
     },
     {
         id: 2,
         selected: false,
-        product: { name: 'Kabel USB Powerbank Ke 12v Modem Telkomsel Orbit A1 Star 2...', price: 24389 },
+        product: { name: 'Kabel USB Powerbank Ke 12v Modem Telkomsel Orbit A1 Star 2', price: 24389 },
         quantity: 1,
     },
 ]);
@@ -175,17 +175,23 @@ const formattedTotalPrice = computed(() => formatCurrency(totalPrice.value));
 
 const whatsappMessage = computed(() => {
     const selectedProducts = cartItems.value.filter(item => item.selected);
-    let message = "Halo, saya ingin memesan produk berikut:\n\n";
+    let message = "Hai Customer Service,\n\n";
+    message += "Saya ingin melakukan pemesanan untuk produk-produk berikut:\n\n";
 
-    selectedProducts.forEach(item => {
-        message += `- ${item.product.name}\n`;
-        message += `  Jumlah: ${item.quantity}\n`;
-        message += `  Harga Satuan: ${formatCurrency(item.product.price)}\n`;
-        message += `  Total: ${formatCurrency(item.product.price * item.quantity)}\n\n`;
+    selectedProducts.forEach((item, index) => {
+        message += `${index + 1}. ${item.product.name}\n`;
+        message += `   Kuantitas: ${item.quantity} unit\n`;
+        message += `   Harga per unit: ${formatCurrency(item.product.price)}\n`;
+        message += `   Subtotal: ${formatCurrency(item.product.price * item.quantity)}\n\n`;
     });
 
-    message += `Total Pesanan: ${formattedTotalPrice.value}\n\n`;
-    message += "Mohon konfirmasi ketersediaan dan proses pembayaran. Terima kasih!";
+    message += `Total Nilai Pesanan: ${formattedTotalPrice.value}\n\n`;
+    message += "Mohon bantuan untuk:\n";
+    message += "1. Mengkonfirmasi ketersediaan stok\n";
+    message += "2. Memberikan informasi mengenai metode pembayaran\n";
+    message += "3. Menjelaskan proses pengiriman\n\n";
+    message += "Terima kasih atas perhatian dan bantuannya. Saya menantikan respons Anda.\n\n";
+    message += "Hormat saya,\n[Nama Pelanggan]";
 
     return encodeURIComponent(message);
 });

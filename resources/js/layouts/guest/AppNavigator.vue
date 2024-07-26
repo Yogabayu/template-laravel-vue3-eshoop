@@ -1,8 +1,8 @@
 <template>
     <v-navigation-drawer v-model="localDrawer" temporary>
         <v-list>
-            <v-list-item v-for="item in menuItems" :key="item" :title="item"
-                @click="activeItem = item; drawer = false"></v-list-item>
+            <v-list-item v-for="item in menuItems" :key="item.title" :title="item.title"
+            :class="{ 'v-btn--active': $route.path === item.value }" :to="item.value"></v-list-item>
         </v-list>
         <v-divider></v-divider>
         <v-list>
@@ -33,7 +33,11 @@ watch(() => props.drawer, (newVal) => {
 watch(localDrawer, (newVal) => {
     emit('update:drawer', newVal);
 });
-const menuItems = ['Home', 'Services', 'About', 'Contact'];
+const menuItems = [
+    { title: 'Home', value: '/dashboard' },
+    { title: 'Services', value: '/service' },
+    { title: 'Shop', value: '/shop' },
+];
 const activeItem = ref('Home');
 const selectedCategory = ref('all');
 const searchQuery = ref('');

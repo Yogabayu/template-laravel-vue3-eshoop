@@ -1,70 +1,78 @@
 <template>
   <div class="shop-container">
-    <v-card class="sidebar">
-      <h3 class="filter-title"><v-icon>mdi-filter-variant</v-icon> FILTER</h3>
+    <v-row>
+      <v-col cols="12" sm="4" md="3" lg="2">
+        <v-card class="sidebar">
+          <h3 class="filter-title"><v-icon>mdi-filter-variant</v-icon> FILTER</h3>
 
-      <div class="filter-section">
-        <h4>Lokasi</h4>
-        <v-checkbox v-for="location in locations" :key="location" :label="location" hide-details dense></v-checkbox>
-        <v-btn text small color="grey darken-1" class="mt-2">Lainnya <v-icon small>mdi-chevron-down</v-icon></v-btn>
-      </div>
+          <div class="filter-section">
+            <h4>Lokasi</h4>
+            <v-checkbox v-for="location in locations" :key="location" :label="location" hide-details dense></v-checkbox>
+            <v-btn text small color="grey darken-1" class="mt-2">Lainnya <v-icon small>mdi-chevron-down</v-icon></v-btn>
+          </div>
 
-      <div class="filter-section">
-        <h4>Tipe Penjual</h4>
-        <v-checkbox v-for="type in sellerTypes" :key="type" :label="type" hide-details dense></v-checkbox>
-      </div>
+          <div class="filter-section">
+            <h4>Tipe Penjual</h4>
+            <v-checkbox v-for="type in sellerTypes" :key="type" :label="type" hide-details dense></v-checkbox>
+          </div>
 
-      <div class="filter-section">
-        <h4>Metode Pembayaran</h4>
-        <v-checkbox v-for="method in paymentMethods" :key="method" :label="method" hide-details dense></v-checkbox>
-      </div>
+          <div class="filter-section">
+            <h4>Metode Pembayaran</h4>
+            <v-checkbox v-for="method in paymentMethods" :key="method" :label="method" hide-details dense></v-checkbox>
+          </div>
 
-      <div class="filter-section">
-        <h4>Opsi Pengiriman</h4>
-        <v-checkbox v-for="option in shippingOptions" :key="option" :label="option" hide-details dense></v-checkbox>
-      </div>
-    </v-card>
-
-    <v-card class="main-content">
-      <div class="sort-options mt-4 mb-2">
-        <v-btn-toggle v-model="sortOption" mandatory>
-          <v-btn value="related" text class="text-none">Terkait</v-btn>
-          <v-btn value="latest" text class="text-none">Terbaru</v-btn>
-          <v-btn value="topsales" text class="text-none">Terlaris</v-btn>
-        </v-btn-toggle>
-        <v-select v-model="priceSort" :items="priceSortOptions" label="Harga" dense outlined hide-details
-          class="price-sort"></v-select>
-      </div>
-
-      <div class="product-grid">
-        <v-card v-for="product in products" :key="product.id" flat class="product-card ma-2" @click="goToProductDetail"
-          style="cursor: pointer;">
-          <v-img :src="product.image" height="200" contain class="grey lighten-2">
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-          <v-card-text class="pa-2">
-            <div class="product-name">{{ product.name }}</div>
-            <div class="product-price">Rp{{ product.price.toLocaleString() }}</div>
-            <div class="product-sold">{{ product.sold }} Terjual</div>
-          </v-card-text>
+          <div class="filter-section">
+            <h4>Opsi Pengiriman</h4>
+            <v-checkbox v-for="option in shippingOptions" :key="option" :label="option" hide-details dense></v-checkbox>
+          </div>
         </v-card>
-      </div>
+      </v-col>
 
-      <div class="pagination mt-4">
-        <v-pagination v-model="page" :length="17" total-visible="7"></v-pagination>
-      </div>
-    </v-card>
+      <v-col cols="12" sm="8" md="9" lg="8">
+        <v-card class="main-content">
+          <div class="sort-options mt-4 mb-2">
+            <v-btn-toggle v-model="sortOption" mandatory>
+              <v-btn value="related" text class="text-none">Terkait</v-btn>
+              <v-btn value="latest" text class="text-none">Terbaru</v-btn>
+              <v-btn value="topsales" text class="text-none">Terlaris</v-btn>
+            </v-btn-toggle>
+            <v-select v-model="priceSort" :items="priceSortOptions" label="Harga" dense outlined hide-details
+              class="price-sort"></v-select>
+          </div>
 
-    <div class="discount-banner">
-      <h3 class="discount-title">Diskon</h3>
-      <div class="discount-amount">Rp125</div>
-      <div class="min-purchase">Min. Belanja Rp12,5RB</div>
-      <v-btn color="deep-orange" block class="text-none">Klaim</v-btn>
-    </div>
+          <div class="product-grid">
+            <v-card v-for="product in products" :key="product.id" flat class="product-card ma-2" @click="goToProductDetail"
+              style="cursor: pointer;">
+              <v-img :src="product.image" height="200" contain class="grey lighten-2">
+                <template v-slot:placeholder>
+                  <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-card-text class="pa-2">
+                <div class="product-name">{{ product.name }}</div>
+                <div class="product-price">Rp{{ product.price.toLocaleString() }}</div>
+                <div class="product-sold">{{ product.sold }} Terjual</div>
+              </v-card-text>
+            </v-card>
+          </div>
+
+          <div class="pagination mt-4">
+            <v-pagination v-model="page" :length="17" total-visible="7"></v-pagination>
+          </div>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" sm="12" md="12" lg="2">
+        <div class="discount-banner">
+          <h3 class="discount-title">Diskon</h3>
+          <div class="discount-amount">Rp125</div>
+          <div class="min-purchase">Min. Belanja Rp12,5RB</div>
+          <v-btn color="deep-orange" block class="text-none">Klaim</v-btn>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -104,14 +112,11 @@ const goToProductDetail = (productId) => {
 
 <style scoped>
 .shop-container {
-  display: flex;
-  gap: 20px;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .sidebar {
-  width: 250px;
   padding: 16px;
   border-radius: 4px;
 }
@@ -135,36 +140,13 @@ const goToProductDetail = (productId) => {
 }
 
 .main-content {
-  flex-grow: 1;
   padding: 16px;
   border-radius: 4px;
 }
 
-.search-result {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.search-result h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.featured-shop {
-  margin-bottom: 20px;
-}
-
-.product-showcase {
-  display: flex;
-  overflow-x: auto;
-  margin-bottom: 20px;
-}
-
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 16px;
 }
 
@@ -196,12 +178,15 @@ const goToProductDetail = (productId) => {
 
 .sort-options {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 .price-sort {
   width: 200px;
+  max-width: 100%;
 }
 
 .pagination {
@@ -210,7 +195,7 @@ const goToProductDetail = (productId) => {
 }
 
 .discount-banner {
-  width: 200px;
+  width: 100%;
   padding: 15px;
   background-color: #FFF0F0;
   border: 1px solid #FFD6D6;
@@ -233,5 +218,20 @@ const goToProductDetail = (productId) => {
   font-size: 12px;
   margin-bottom: 10px;
   color: #757575;
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .sort-options {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .price-sort {
+    width: 100%;
+  }
 }
 </style>
