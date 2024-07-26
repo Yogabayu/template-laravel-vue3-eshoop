@@ -215,7 +215,7 @@ const whatsappMessage = computed(() => {
 });
 
 function openWhatsApp() {
-  const phoneNumber = '6281234567890'; // Ganti dengan nomor WhatsApp yang sesuai
+  const phoneNumber = '6282139552647'; // Ganti dengan nomor WhatsApp yang sesuai
   window.open(`https://wa.me/${phoneNumber}?text=${whatsappMessage.value}`, '_blank');
 }
 </script>
