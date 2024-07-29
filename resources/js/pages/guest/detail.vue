@@ -210,8 +210,11 @@ function increaseQuantity() {
 }
 
 // btn whatsapp
+// const whatsappMessage = computed(() => {
+//   return encodeURIComponent(`Halo, saya tertarik dengan ${featuredProduct.value.name} yang Anda tawarkan.%0A%0ADetil Pesanan:%0A- Produk: ${featuredProduct.value.name}%0A- Jumlah: ${quantity.value} unit%0A- Harga Satuan: Rp${featuredProduct.value.price.toLocaleString('id-ID')}%0A%0AMohon informasi mengenai ketersediaan stok dan langkah selanjutnya untuk melakukan pembelian.%0A%0ATerima kasih atas bantuan Anda.`);
+// });
 const whatsappMessage = computed(() => {
-  return encodeURIComponent(`Halo, saya tertarik dengan ${featuredProduct.value.name} yang Anda tawarkan.%0A%0ADetil Pesanan:%0A- Produk: ${featuredProduct.value.name}%0A- Jumlah: ${quantity.value} unit%0A- Harga Satuan: Rp${featuredProduct.value.price.toLocaleString('id-ID')}%0A%0AMohon informasi mengenai ketersediaan stok dan langkah selanjutnya untuk melakukan pembelian.%0A%0ATerima kasih atas bantuan Anda.`);
+  return encodeURIComponent(`Halo, saya ingin menanyakan mengenai ${featuredProduct.value.name} yang Anda tawarkan.%0A%0ADetail Pesanan:%0A- Produk: ${featuredProduct.value.name}%0A- Jumlah: ${quantity.value} unit%0A- Harga Satuan: Rp${featuredProduct.value.price.toLocaleString('id-ID')}%0A%0AMohon informasi mengenai ketersediaan stok dan langkah-langkah selanjutnya untuk melakukan pembelian.%0A%0A Terima kasih atas perhatian dan bantuan Anda.`);
 });
 
 function openWhatsApp() {
