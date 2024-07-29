@@ -35,9 +35,10 @@
           </div>
           <div class="social-share">
             atau bagikan
-            <v-btn icon="mdi-instagram" variant="text"></v-btn>
-            <v-btn icon="mdi-facebook" variant="text"></v-btn>
-            <v-btn icon="mdi-twitter" variant="text"></v-btn>
+            <v-btn icon="mdi-instagram" variant="text" @click="shareOnInstagram"></v-btn>
+            <v-btn icon="mdi-facebook" variant="text" @click="shareOnFacebook"></v-btn>
+            <v-btn icon="mdi-twitter" variant="text" @click="shareOnTwitter"></v-btn>
+
           </div>
         </div>
       </div>
@@ -72,7 +73,7 @@
         <!-- Product Grid -->
         <div class="product-grid mt-3">
           <h3 class="my-2">Produk Lainnya</h3>
-          <v-row v-for="i in [1,2,3,]" :key="i">
+          <v-row v-for="i in [1, 2, 3,]" :key="i">
             <v-col v-for="product in products" :key="product.id" cols="12" sm="6" md="3">
               <v-card class="product-card">
                 <v-img :src="product.image" :alt="product.name" height="200" cover>
@@ -210,11 +211,8 @@ function increaseQuantity() {
 }
 
 // btn whatsapp
-// const whatsappMessage = computed(() => {
-//   return encodeURIComponent(`Halo, saya tertarik dengan ${featuredProduct.value.name} yang Anda tawarkan.%0A%0ADetil Pesanan:%0A- Produk: ${featuredProduct.value.name}%0A- Jumlah: ${quantity.value} unit%0A- Harga Satuan: Rp${featuredProduct.value.price.toLocaleString('id-ID')}%0A%0AMohon informasi mengenai ketersediaan stok dan langkah selanjutnya untuk melakukan pembelian.%0A%0ATerima kasih atas bantuan Anda.`);
-// });
 const whatsappMessage = computed(() => {
-  const message = `Halo, saya ingin menanyakan mengenai ${featuredProduct.value.name} yang Anda tawarkan.\n\nDetail Pesanan:\n- Produk: ${featuredProduct.value.name}\n- Jumlah: ${quantity.value} unit\n- Harga Satuan: Rp${featuredProduct.value.price.toLocaleString('id-ID')}\n\nMohon informasi mengenai ketersediaan stok dan langkah-langkah selanjutnya untuk melakukan pembelian.\n\nTerima kasih atas perhatian dan bantuan Anda.`;
+  const message = `Halo, saya ingin menanyakan mengenai ${featuredProduct.value.name} yang Anda tawarkan.\n\nDetail Pesanan:\n- Produk: ${featuredProduct.value.name}\n- Jumlah: ${quantity.value} unit\n- Harga Satuan: Rp${featuredProduct.value.price.toLocaleString('id-ID')}\n\nTerima kasih atas perhatian dan bantuan Anda.`;
   return encodeURIComponent(message);
 });
 
@@ -222,6 +220,39 @@ function openWhatsApp() {
   const phoneNumber = '6282139552647'; // Ganti dengan nomor WhatsApp yang sesuai
   window.open(`https://wa.me/${phoneNumber}?text=${whatsappMessage.value}`, '_blank');
 }
+
+
+// Menggunakan computed property jika ada kebutuhan dinamis
+const productName = computed(() => featuredProduct.value.name);
+const productPrice = computed(() => `Rp${featuredProduct.value.price.toLocaleString('id-ID')}`);
+// const productUrl = computed(() => `https://example.com/products/${featuredProduct.value.id}`); // Ganti dengan URL produk yang sesuai
+const productUrl = computed(() => `https://shop.yogabayuap.com/detail`); // Ganti dengan URL produk yang sesuai
+
+function shareOnInstagram() {
+  // Buat teks untuk dibagikan
+  const shareText = `Check out this product: ${productName.value} - ${productPrice.value}\n${productUrl.value}`;
+  
+  // Salin teks ke clipboard
+  navigator.clipboard.writeText(shareText).then(() => {
+    // Tampilkan pesan sukses kepada pengguna
+    alert('Teks telah disalin ke clipboard. Anda bisa menempelkannya di Instagram!');
+  }).catch(err => { 
+    console.error('Gagal menyalin teks: ', err);
+    alert('Gagal menyalin teks. Silakan coba lagi.');
+  });
+}
+
+
+function shareOnFacebook() {
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl.value)}&quote=${encodeURIComponent(`Check out this product: ${productName.value} - ${productPrice.value}`)}`;
+  window.open(facebookShareUrl, '_blank');
+}
+
+function shareOnTwitter() {
+  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this product: ${productName.value} - ${productPrice.value}`)}&url=${encodeURIComponent(productUrl.value)}`;
+  window.open(twitterShareUrl, '_blank');
+}
+
 </script>
 
 <style scoped>
