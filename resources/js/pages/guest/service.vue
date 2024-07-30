@@ -10,19 +10,24 @@
         </v-parallax>
         <v-container class="mt-16">
             <v-row>
-                <v-col v-for="service in services" :key="service.title" cols="12" md="6" lg="4">
-                    <v-card class="mx-auto" max-width="400">
-                        <v-img :src="service.image" height="200px" cover></v-img>
-                        <v-card-title class="text-h5">{{ service.title }}</v-card-title>
-                        <v-card-text>
-                            <p>{{ service.description }}</p>
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-btn color="primary" variant="tonal">
-                                Learn More
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
+                <v-col v-for="(service, index) in services" :key="service.title" cols="12" md="6" lg="4"
+                    data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
+                    <v-hover v-slot="{ isHovering, props }">
+                        <v-card class="mx-auto" max-width="400" v-bind="props" :elevation="isHovering ? 12 : 2"
+                            :class="{ 'on-hover': isHovering }">
+                            <v-img :src="service.image" height="200px" cover></v-img>
+                            <v-card-title class="text-h5">{{ service.title }}</v-card-title>
+                            <v-card-text>
+                                <p>{{ service.description }}</p>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn color="primary" variant="tonal">
+                                    Learn More
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-hover>
+
                 </v-col>
             </v-row>
 
@@ -33,12 +38,16 @@
             </v-row>
 
             <v-row>
-                <v-col v-for="feature in features" :key="feature.title" cols="12" sm="6" md="3">
-                    <v-card class="text-center pa-4" flat>
-                        <v-icon :icon="feature.icon" size="48" color="primary" class="mb-4"></v-icon>
-                        <h3 class="text-h6 mb-2">{{ feature.title }}</h3>
-                        <p>{{ feature.description }}</p>
-                    </v-card>
+                <v-col v-for="(feature, index) in features" :key="feature.title" cols="12" sm="6" md="3"
+                    data-aos="fade-down" :data-aos-delay="200 * (index + 1)">
+                    <v-hover v-slot="{ isHovering, props }">
+                        <v-card class="text-center pa-4" flat v-bind="props" :elevation="isHovering ? 12 : 2"
+                        :class="{ 'on-hover': isHovering }">
+                            <v-icon :icon="feature.icon" size="48" color="primary" class="mb-4"></v-icon>
+                            <h3 class="text-h6 mb-2">{{ feature.title }}</h3>
+                            <p>{{ feature.description }}</p>
+                        </v-card>
+                    </v-hover>
                 </v-col>
             </v-row>
         </v-container>
@@ -110,5 +119,10 @@ const features = ref([
 .v-parallax::v-deep .v-parallax__content {
     background: rgba(0, 0, 0, 0.4);
     /* Overlay gelap untuk meningkatkan keterbacaan teks */
+}
+
+.on-hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
 }
 </style>

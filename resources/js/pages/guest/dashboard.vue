@@ -1,19 +1,20 @@
 <template>
   <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background :show-arrows="false"
     class="on-sale-section">
-    <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="slide.img" cover>
+    <v-carousel-item v-for="(slide, i) in slides" :key="i" :lazy-src="slide.img" cover>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" md="6">
-            <h1 class="text-h3 font-weight-bold mb-4 text-white">Transform Your Space with FreshScent</h1>
-            <p class="text-body-1 mb-6 text-white">Experience the power of premium fragrances tailored for your
+            <h1 class="text-h3 font-weight-bold mb-4 text-white" data-aos="fade-right" data-aos-delay="200">Transform Your Space with FreshScent</h1>
+            <p class="text-body-1 mb-6 text-white" data-aos="fade-up" data-aos-delay="400">Experience the power of premium fragrances tailored for your
               environment.
               Elevate your atmosphere with our professional scenting solutions.</p>
-            <v-btn color="secondary" size="large" class="mr-4">Explore Services</v-btn>
-            <v-btn color="white" variant="outlined" size="large">Contact Us</v-btn>
+            <v-btn color="secondary" size="large" class="mr-4" data-aos="fade-up" data-aos-delay="600">Explore Services</v-btn>
+            <v-btn color="white" variant="outlined" size="large" data-aos="fade-up" data-aos-delay="800">Contact Us</v-btn>
           </v-col>
-          <v-col cols="12" md="6" class="text-center">
-            <v-img src="https://via.placeholder.com/500x300" alt="Scent diffuser" class="rounded-lg" ></v-img>
+          <v-col cols="12" md="6" class="text-center" data-aos="fade-left" data-aos-delay="400">
+            <v-img src="https://via.placeholder.com/500x300"
+            lazy-src="https://via.placeholder.com/500x300" alt="Scent diffuser" class="rounded-lg"></v-img>
           </v-col>
         </v-row>
       </v-container>
@@ -29,7 +30,7 @@
 
   <v-container class="py-12">
     <v-row justify="center">
-      <v-col v-for="(category, index) in displayedCategories" :key="index" cols="6" sm="4" md="3" lg="2">
+      <v-col v-for="(category, index) in displayedCategories" :key="index" cols="6" sm="4" md="3" lg="2" data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
         <v-card class="text-center pa-4 custom-rounded" flat>
           <v-icon :icon="category.icon" size="x-large" color="primary" class="mb-4"></v-icon>
           <h3 class="text-subtitle-1">{{ category.name }}</h3>
@@ -47,7 +48,7 @@
   <!-- On Sale Section -->
   <v-container class="on-sale-section py-12 custom-rounded mb-2">
     <v-row justify="center">
-      <v-col cols="12" class="text-center mb-8">
+      <v-col cols="12" class="text-center mb-8" data-aos="fade-down" data-aos-delay="200">
         <div class="d-flex align-center justify-center mb-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -62,7 +63,7 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-col v-for="(item, index) in saleItems" :key="index" cols="6" sm="6" md="4" lg="3">
+      <v-col v-for="(item, index) in saleItems" :key="index" cols="6" sm="6" md="4" lg="3" data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
         <v-hover v-slot="{ isHovering, props }">
           <v-card class="mx-auto" max-width="374" v-bind="props" :elevation="isHovering ? 12 : 2"
             :class="{ 'on-hover': isHovering }">
@@ -102,11 +103,11 @@
   <!-- Today for You Section -->
   <v-container fluid class="today-for-you-section py-12">
     <v-row align="center" justify="space-between" class="mb-6">
-      <v-col cols="12" sm="4">
+      <v-col cols="12" sm="4" data-aos="fade-right" data-aos-delay="200">
         <h2 class="text-h3 font-weight-bold" :class="$vuetify.theme.dark ? 'text-white' : 'text-black'">Today's For You!
         </h2>
       </v-col>
-      <v-col cols="12" sm="8">
+      <v-col cols="12" sm="8" data-aos="fade-left" data-aos-delay="400">
         <v-chip-group v-model="selectedCategory" class="justify-end"
           :class="$vuetify.theme.dark ? 'text-white' : 'text-black'">
           <v-chip v-for="category in categories" :key="category.value" :value="category.value"
@@ -118,8 +119,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="(item, index) in todayForYouItems" :key="index" cols="12" sm="6" md="3">
-        <v-card class="mx-auto" max-width="374">
+      <v-col v-for="(item, index) in todayForYouItems" :key="index" cols="12" sm="6" md="3" data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
+        <v-card class="mx-auto" max-width="374" data-aos="fade-up" data-aos-delay="200">
           <v-img :src="item.image" height="250" cover :lazy-src="item.image">
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">

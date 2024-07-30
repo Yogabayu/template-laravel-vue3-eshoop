@@ -7,6 +7,8 @@ import router from '@/router'
 import '@core-scss/template/index.scss'
 import '@layouts/styles/index.scss'
 import '@styles/styles.scss'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import { createPinia } from 'pinia'
 import Swal from 'sweetalert2'
 import { createApp } from 'vue'
@@ -26,6 +28,14 @@ app.use(router)
 
 // Mount vue app
 app.mount('#app')
+
+AOS.init({
+  duration: 400,
+  easing: 'ease-in-out',
+  once: false,
+  mirror: true,
+  offset: 50,
+});
 
 // Define the showToast method
 const showToast = (icon, title, text) => {
