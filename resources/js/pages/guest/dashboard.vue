@@ -1,16 +1,16 @@
 <template>
-  <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background :show-arrows="false"
+  <!-- <v-carousel v-model="currentSlide" cycle height="100vh" hide-delimiter-background :show-arrows="false"
     class="on-sale-section">
-    <v-carousel-item v-for="(slide, i) in slides" :key="i" :lazy-src="slide.img" cover>
+    <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="backgroundImage"  cover>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" md="6">
-            <h1 class="text-h3 font-weight-bold mb-4 text-white" data-aos="fade-right" data-aos-delay="200">Transform Your Space with FreshScent</h1>
-            <p class="text-body-1 mb-6 text-white" data-aos="fade-up" data-aos-delay="400">Experience the power of premium fragrances tailored for your
+            <h1 class="text-h3 font-weight-bold mb-4 " data-aos="fade-right" data-aos-delay="200">Transform Your Space with FreshScent</h1>
+            <p class="text-body-1 mb-6 " data-aos="fade-up" data-aos-delay="400">Experience the power of premium fragrances tailored for your
               environment.
               Elevate your atmosphere with our professional scenting solutions.</p>
             <v-btn color="secondary" size="large" class="mr-4" data-aos="fade-up" data-aos-delay="600">Explore Services</v-btn>
-            <v-btn color="white" variant="outlined" size="large" data-aos="fade-up" data-aos-delay="800">Contact Us</v-btn>
+            <v-btn variant="outlined" size="large" data-aos="fade-up" data-aos-delay="800">Contact Us</v-btn>
           </v-col>
           <v-col cols="12" md="6" class="text-center" data-aos="fade-left" data-aos-delay="400">
             <v-img src="https://via.placeholder.com/500x300"
@@ -26,17 +26,46 @@
           @click="currentSlide = i"></v-btn>
       </div>
     </template>
-  </v-carousel>
+</v-carousel> -->
+
+  <div
+    :style="{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '100vh' }">
+    <v-container class="fill-height" fluid>
+      <v-row align="center" justify="center">
+        <v-col cols="12" md="6">
+          <h1 class="text-h3 font-weight-bold mb-4" data-aos="fade-right" data-aos-delay="200">
+            Transform Your Space with FreshScent
+          </h1>
+          <p class="text-body-1 mb-6" data-aos="fade-up" data-aos-delay="400">
+            Experience the power of premium fragrances tailored for your environment.
+            Elevate your atmosphere with our professional scenting solutions.
+          </p>
+          <v-btn color="secondary" size="large" class="mr-4" data-aos="fade-up" data-aos-delay="600" :to="'/shop'">
+            Explore Shop
+          </v-btn>
+          <v-btn variant="outlined" size="large" data-aos="fade-up" data-aos-delay="800" :to="'/service'">
+            Service
+          </v-btn>
+        </v-col>
+        <v-col cols="12" md="6" class="text-center" data-aos="fade-left" data-aos-delay="400">
+          <v-img src="https://via.placeholder.com/500x300" lazy-src="https://via.placeholder.com/500x300"
+            alt="Scent diffuser" class="rounded-lg"></v-img>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 
   <v-container class="py-12">
     <v-row justify="center">
-      <v-col v-for="(category, index) in displayedCategories" :key="index" cols="6" sm="4" md="3" lg="2" data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
+      <v-col v-for="(category, index) in displayedCategories" :key="index" cols="6" sm="4" md="3" lg="2"
+        data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
         <v-card class="text-center pa-4 custom-rounded" flat>
           <v-icon :icon="category.icon" size="x-large" color="primary" class="mb-4"></v-icon>
           <h3 class="text-subtitle-1">{{ category.name }}</h3>
         </v-card>
       </v-col>
-      <v-col v-if="categoriesList.length > 5" cols="6" sm="4" md="3" lg="2">
+      <v-col v-if="categoriesList.length > 5" cols="6" sm="4" md="3" lg="2" data-aos="fade-up"
+        :data-aos-delay="200 * (displayedCategories.length + 1)">
         <v-card class="text-center pa-4 custom-rounded" flat @click="showAllCategories">
           <v-icon icon="mdi-dots-horizontal" size="x-large" color="grey" class="mb-4"></v-icon>
           <h3 class="text-subtitle-1">More Categories</h3>
@@ -63,17 +92,17 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-col v-for="(item, index) in saleItems" :key="index" cols="6" sm="6" md="4" lg="3" data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
+      <v-col v-for="(item, index) in saleItems" :key="index" cols="6" sm="6" md="4" lg="3" data-aos="fade-up"
+        :data-aos-delay="200 * (index + 1)">
         <v-hover v-slot="{ isHovering, props }">
           <v-card class="mx-auto" max-width="374" v-bind="props" :elevation="isHovering ? 12 : 2"
             :class="{ 'on-hover': isHovering }">
-            <v-img :src="item.image" height="200" cover class="align-end" 
-            :lazy-src="item.image">
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-              </v-row>
-            </template>
+            <v-img :src="item.image" height="200" cover class="align-end" :lazy-src="item.image">
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-row>
+              </template>
               <v-card-title class="text-white bg-black bg-opacity-50 text-subtitle-1">
                 {{ item.name }}
               </v-card-title>
@@ -119,29 +148,33 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="(item, index) in todayForYouItems" :key="index" cols="12" sm="6" md="3" data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
-        <v-card class="mx-auto" max-width="374" data-aos="fade-up" data-aos-delay="200">
-          <v-img :src="item.image" height="250" cover :lazy-src="item.image">
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+      <v-col v-for="(item, index) in todayForYouItems" :key="index" cols="12" sm="6" md="3" data-aos="fade-up"
+        :data-aos-delay="200 * (index + 1)">
+        <v-hover v-slot="{ isHovering, props }">
+          <v-card class="mx-auto" max-width="374" style="cursor: pointer;" v-bind="props"
+            :elevation="isHovering ? 12 : 2" :class="{ 'on-hover': isHovering }">
+            <v-img :src="item.image" height="250" cover :lazy-src="item.image">
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+            <v-card-title>{{ item.name }}</v-card-title>
+            <v-card-text>
+              <v-row align="center" class="mx-0">
+                <v-rating :model-value="item.rating" color="amber" dense half-increments readonly size="14"></v-rating>
+                <div class="grey--text ms-4">{{ item.soldCount }} Sold</div>
               </v-row>
-            </template>
-          </v-img>
-          <v-card-title>{{ item.name }}</v-card-title>
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <v-rating :model-value="item.rating" color="amber" dense half-increments readonly size="14"></v-rating>
-              <div class="grey--text ms-4">{{ item.soldCount }} Sold</div>
-            </v-row>
-            <div class="my-4 text-subtitle-1">
-              <span class="font-weight-bold">{{ item.price }}</span>
-              <span v-if="item.originalPrice" class="text-decoration-line-through ms-2 text-caption grey--text">
-                {{ item.originalPrice }}
-              </span>
-            </div>
-          </v-card-text>
-        </v-card>
+              <div class="my-4 text-subtitle-1">
+                <span class="font-weight-bold">{{ item.price }}</span>
+                <span v-if="item.originalPrice" class="text-decoration-line-through ms-2 text-caption grey--text">
+                  {{ item.originalPrice }}
+                </span>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-hover>
       </v-col>
     </v-row>
   </v-container>
@@ -150,6 +183,11 @@
 
 <script setup>
 import { computed, ref } from 'vue';
+import backgroundImg from '../../../images/background/backgournd.jpg';
+import backgroundShop from '../../../images/background/shop.jpg';
+
+const backgroundImage = ref(backgroundImg);
+const backgroundImageShop = ref(backgroundShop);
 
 const saleItems = ref([
   {
@@ -257,18 +295,26 @@ const slides = ref([
 </script>
 
 <style scoped>
+
+.v-card.on-hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
 /* Tambahkan gaya responsif tambahan jika diperlukan */
 @media (max-width: 600px) {
   .v-card-title {
     font-size: 1rem !important;
   }
+
   .v-card-text {
     font-size: 0.875rem;
   }
+
   .text-h6 {
     font-size: 1rem !important;
   }
 }
+
 .text-white {
   color: #FFFFFF !important;
 }

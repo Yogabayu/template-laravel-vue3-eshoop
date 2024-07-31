@@ -8,7 +8,7 @@
       <v-container fluid class="shop-beyond-boundaries-section py-12">
         <v-row justify="center">
           <v-col cols="12">
-            <v-img src="https://picsum.photos/1600/900" alt="Let's Shop Beyond Boundaries" height="300"
+            <v-img :src="backgroundImageShop" alt="Let's Shop Beyond Boundaries" height="300"
               class="custom-rounded" cover>
               <v-row align="center" justify="center" class="fill-height">
                 <v-col cols="12" class="text-center">
@@ -26,12 +26,14 @@
 
 <script setup>
 import { ref } from 'vue';
+import backgroundShop from '../../../images/background/shop.jpg';
 import AppFooter from './AppFooter.vue';
 import AppHeader from './AppHeader.vue';
 import AppNavigator from './AppNavigator.vue';
 
 const theme = ref('light');
 const drawer = ref(false);
+const backgroundImageShop = ref(backgroundShop);
 
 function toggleTheme() {
   theme.value = theme.value === 'light' ? 'dark' : 'light';
