@@ -12,7 +12,7 @@
               class="custom-rounded" cover>
               <v-row align="center" justify="center" class="fill-height">
                 <v-col cols="12" class="text-center">
-                  <h2 class="text-h2 font-weight-bold text-white">"Let's Shop Beyond Boundaries"</h2>
+                  <h2 class="text-h2 font-weight-bold">"Let's Shop Beyond Boundaries"</h2>
                 </v-col>
               </v-row>
             </v-img>

@@ -1,10 +1,10 @@
 <template>
     <div>
-        <v-parallax src="https://picsum.photos/1920/1080/" :height="300">
+        <v-parallax :src="backgroundImage" :height="300">
             <v-row align="center" justify="center" class="fill-height">
                 <v-col cols="12" class="text-center">
-                    <h1 class="text-h2 font-weight-bold text-white">Our Services</h1>
-                    <p class="text-h5 font-weight-light mt-4 text-white">Discover the FreshScent Experience</p>
+                    <h1 class="text-h2 font-weight-bold">Our Services</h1>
+                    <p class="text-h5 font-weight-light mt-4">Discover the FreshScent Experience</p>
                 </v-col>
             </v-row>
         </v-parallax>
@@ -14,7 +14,7 @@
                     data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
                     <v-hover v-slot="{ isHovering, props }">
                         <v-card class="mx-auto" max-width="400" v-bind="props" :elevation="isHovering ? 12 : 2"
-                            :class="{ 'on-hover': isHovering }">
+                            :class="{ 'on-hover': isHovering }" style="cursor: pointer;">
                             <v-img :src="service.image" height="200px" cover></v-img>
                             <v-card-title class="text-h5">{{ service.title }}</v-card-title>
                             <v-card-text>
@@ -57,6 +57,9 @@
 
 <script setup>
 import { ref } from 'vue';
+import backgroundImg from '../../../images/background/backgournd.jpg';
+
+const backgroundImage = ref(backgroundImg);
 
 const services = ref([
     {

@@ -59,14 +59,14 @@
     <v-row justify="center">
       <v-col v-for="(category, index) in displayedCategories" :key="index" cols="6" sm="4" md="3" lg="2"
         data-aos="fade-up" :data-aos-delay="200 * (index + 1)">
-        <v-card class="text-center pa-4 custom-rounded" flat>
+        <v-card class="text-center pa-4 custom-rounded" flat style="cursor: pointer;">
           <v-icon :icon="category.icon" size="x-large" color="primary" class="mb-4"></v-icon>
           <h3 class="text-subtitle-1">{{ category.name }}</h3>
         </v-card>
       </v-col>
       <v-col v-if="categoriesList.length > 5" cols="6" sm="4" md="3" lg="2" data-aos="fade-up"
         :data-aos-delay="200 * (displayedCategories.length + 1)">
-        <v-card class="text-center pa-4 custom-rounded" flat @click="showAllCategories">
+        <v-card class="text-center pa-4 custom-rounded" flat @click="showAllCategories" style="cursor: pointer;">
           <v-icon icon="mdi-dots-horizontal" size="x-large" color="grey" class="mb-4"></v-icon>
           <h3 class="text-subtitle-1">More Categories</h3>
         </v-card>
@@ -96,7 +96,7 @@
         :data-aos-delay="200 * (index + 1)">
         <v-hover v-slot="{ isHovering, props }">
           <v-card class="mx-auto" max-width="374" v-bind="props" :elevation="isHovering ? 12 : 2"
-            :class="{ 'on-hover': isHovering }">
+            :class="{ 'on-hover': isHovering }" style="cursor: pointer;">
             <v-img :src="item.image" height="200" cover class="align-end" :lazy-src="item.image">
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -184,10 +184,8 @@
 <script setup>
 import { computed, ref } from 'vue';
 import backgroundImg from '../../../images/background/backgournd.jpg';
-import backgroundShop from '../../../images/background/shop.jpg';
 
 const backgroundImage = ref(backgroundImg);
-const backgroundImageShop = ref(backgroundShop);
 
 const saleItems = ref([
   {
