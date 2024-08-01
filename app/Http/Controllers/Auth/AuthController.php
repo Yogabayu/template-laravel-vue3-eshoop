@@ -12,50 +12,19 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
-    {
-        try {
-            $data = $request->validate([
-                'name' => 'required|max:255',
-                'email' => 'required|email|unique:users',
-                'password' => 'required'
-            ]);
-
-            $data['password'] = Hash::make($request->password);
-
-            $user = User::create($data);
-
-            $token = $user->createToken('appToken')->accessToken;
-
-            // return response(['user' => $user, 'token' => $token]);
-
-            return response()->json([
-                'user' => $user,
-                'token' => $token,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to authenticate. | ' . $e->getMessage(),
-            ], 401);
-        }
-    }
-
     public function login(Request $request)
     {
         try {
-            $user = User::where('nik', request('nik'))->first();
+            if (Auth::attempt(['email' => $request->email, 'password' => request('password')])) {
+                $user = User::where('email', request('email'))->first();
+                if (!$user->isActive) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Failed | Akun tidak aktif, silahkan hubungi administrator',
+                    ], 401);
+                }
 
-            if (!$user->isActive) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Failed | Akun tidak aktif, silahkan hubungi administrator',
-                ], 401);
-            }
-
-            if ($user && Auth::attempt(['email' => $user->email, 'password' => request('password')])) {
-
-                $user = User::with('position', 'position.role')->find(Auth::user()->id);
+                $user = User::with('productGenerals')->find(Auth::user()->id);
                 $user_token['token'] = $user->createToken('appToken')->accessToken;
 
                 return response()->json([

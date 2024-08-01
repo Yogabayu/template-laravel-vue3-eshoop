@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_generals', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('user_id');
             $table->uuid('category_id');
             $table->uuid('shipping_id');
             $table->string('name');
@@ -30,8 +31,9 @@ return new class extends Migration
             $table->string('location');
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('shipping_id')->references('id')->on('shipping_options')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('shipping_id')->references('id')->on('shipping_options');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

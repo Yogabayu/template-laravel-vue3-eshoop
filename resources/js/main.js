@@ -65,4 +65,4 @@ app.config.globalProperties.$showToast = showToast
 // app.config.globalProperties.$userPhotoUrl = 'http://localhost:8000/user/photo/';
 /** development */
 /** production */
-app.config.globalProperties.$userPhotoUrl = 'http://shop.yogabayuap.com/user/photo/';
+// app.config.globalProperties.$userPhotoUrl = 'http://shop.yogabayuap.com/user/photo/';

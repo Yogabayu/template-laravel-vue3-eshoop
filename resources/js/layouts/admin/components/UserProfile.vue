@@ -12,7 +12,7 @@
       color="primary"
       variant="tonal"
     >
-      <VImg :src="photoURL" />
+      <VImg :src="avatar1" />
 
       <!-- SECTION Menu -->
       <VMenu
@@ -37,16 +37,18 @@
                     color="primary"
                     variant="tonal"
                   >
-                    <VImg :src="photoURL" />
+                    <!-- <VImg :src="photoURL" /> -->
+                    <VImg :src="avatar1" />
                   </VAvatar>
                 </VBadge>
               </VListItemAction>
             </template>
 
             <VListItemTitle class="font-weight-semibold">
-              {{ this.userData.name }}
+              {{ this.userData.username }}
             </VListItemTitle>
-            <!-- <VListItemSubtitle>Admin</VListItemSubtitle> -->
+            <VListItemSubtitle v-if="this.userData.type === 1">Admin utama</VListItemSubtitle>
+            <VListItemSubtitle v-else>subadmin</VListItemSubtitle>
           </VListItem>
           <VDivider class="my-2" />
 
@@ -125,7 +127,7 @@
 
 <script>
 import LogoutBtn from '@/pages/auth/logout.vue';
-import avatar1 from '@images/avatars/avatar-1.png';
+import avatar1 from '@images/cards/user.png';
 
 export default {
   components: {

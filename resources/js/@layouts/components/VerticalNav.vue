@@ -1,5 +1,5 @@
 <script setup>
-import logo from '@images/arthaya.svg?raw';
+import logo from '@images/logo.svg?raw';
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 import { useDisplay } from 'vuetify';
 
@@ -63,8 +63,8 @@ const handleNavScroll = evt => {
             v-html="logo"
             style="width: 50%;"
           />
-
           
+          <span>Title</span>
         </RouterLink>
       </slot>
     </div>

@@ -1,9 +1,11 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory
+} from "vue-router";
 
 const router = createRouter({
   history: createWebHistory("/"),
-  routes: [
-    {
+  routes: [{
       path: "/",
       redirect: (to) => {
         const userToken = localStorage.getItem("userToken");
@@ -14,101 +16,90 @@ const router = createRouter({
     {
       path: "/dashboard",
       component: () => import("../layouts/guest/App.vue"),
-      children: [
-        {
-          path: "",
-          component: () => import("../pages/guest/dashboard.vue"),
-        },
-      ],
+      children: [{
+        path: "",
+        component: () => import("../pages/guest/dashboard.vue"),
+      }, ],
     },
     {
       path: "/service",
       component: () => import("../layouts/guest/App.vue"),
-      children: [
-        {
-          path: "",
-          component: () => import("../pages/guest/service.vue"),
-        },
-      ],
+      children: [{
+        path: "",
+        component: () => import("../pages/guest/service.vue"),
+      }, ],
     },
     {
       path: "/shop",
       component: () => import("../layouts/guest/App.vue"),
-      children: [
-        {
-          path: "",
-          component: () => import("../pages/guest/shop.vue"),
-        },
-      ],
+      children: [{
+        path: "",
+        component: () => import("../pages/guest/shop.vue"),
+      }, ],
     },
     {
       path: "/detail",
       component: () => import("../layouts/guest/App.vue"),
-      children: [
-        {
-          path: "",
-          component: () => import("../pages/guest/detail.vue"),
-        },
-      ],
+      children: [{
+        path: "",
+        component: () => import("../pages/guest/detail.vue"),
+      }, ],
     },
     {
       path: "/cart",
       component: () => import("../layouts/guest/App.vue"),
-      children: [
-        {
-          path: "",
-          component: () => import("../pages/guest/cart.vue"),
-        },
-      ],
+      children: [{
+        path: "",
+        component: () => import("../pages/guest/cart.vue"),
+      },
+     ],
     },
-    // {
-    //   path: "/login",
-    //   component: () => import("../layouts/blank.vue"),
-    //   children: [
-    //     {
-    //       path: "",
-    //       component: () => import("../pages/auth/login.vue"),
-    //     },
-    //   ],
-    // },
-    // {
-    //   path: "/:pathMatch(.*)*",
-    //   component: () => import("../layouts/blank.vue"),
-    //   children: [
-    //     {
-    //       path: "",
-    //       component: () => import("../pages/[...all].vue"),
-    //     },
-    //   ],
-    // },
     {
-      path: "/unauthorized",
+      path: "/login",
       component: () => import("../layouts/blank.vue"),
       children: [
         {
           path: "",
-          component: () => import("../pages/auth/unauthorized.vue"),
+          component: () => import("../pages/auth/login.vue"),
         },
       ],
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      component: () => import("../layouts/blank.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("../pages/[...all].vue"),
+        },
+      ],
+    },
+    {
+      path: "/unauthorized",
+      component: () => import("../layouts/blank.vue"),
+      children: [{
+        path: "",
+        component: () => import("../pages/auth/unauthorized.vue"),
+      }, ],
     },
 
 
     // authenticated
-    
+
     // admin
-    // {
-    //   path: "/dashboard",
-    //   component: () => import("../layouts/admin/default.vue"),
-    //   children: [
-    //     {
-    //       path: "",
-    //       component: () => import("../pages/admin/dashboard.vue"),
-    //       beforeEnter: (to, from, next) => {
-    //         checkAdminLogin(next);
-    //       },
-    //     },
-    //   ],
-    // },    
+    {
+      path: "/admin/dashboard",
+      component: () => import("../layouts/admin/default.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("../pages/admin/dashboard.vue"),
+          beforeEnter: (to, from, next) => {
+            checkAdminLogin(next);
+          },
+        },
+      ],
+    },    
 
     // //user
     // {
@@ -134,7 +125,7 @@ function checkLogin(next) {
   } else {
     localStorage.removeItem("userToken");
     localStorage.removeItem("userData");
-    
+
     alert("You need to login to access this page.");
     next("/login");
   }
@@ -143,14 +134,14 @@ function checkLogin(next) {
 function checkAdminLogin(next) {
   const userToken = localStorage.getItem("userToken");
   const userData = JSON.parse(localStorage.getItem("userData"));
-  if (userToken && userData && userData.position.role.name=="administrator") {
+  if (userToken && userData && userData.type == 1) {
     next();
   } else {
     localStorage.removeItem("userToken");
     localStorage.removeItem("userData");
-    
+
     alert("You need to have admin permission to access this page.");
-    next("/login"); 
+    next("/login");
   }
 }
 

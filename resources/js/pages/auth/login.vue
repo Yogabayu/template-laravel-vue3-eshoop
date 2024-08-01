@@ -21,7 +21,7 @@
           <VRow>
             <!-- nik -->
             <VCol cols="12">
-              <VTextField v-model="form.nik" autofocus placeholder="008xxxxx" label="NIK" type="number" />
+              <VTextField v-model="form.email" autofocus label="Email" type="text" />
             </VCol>
 
             <!-- password -->
@@ -62,7 +62,7 @@
 </style>
 <script>
 import mainURL from "@/axios";
-import logo from "@images/arthaya.svg?raw";
+import logo from "@images/logo.svg?raw";
 
 export default {
   data() {
@@ -70,8 +70,8 @@ export default {
       userData: null,
       userToken: null,
       form: {
-        nik: null,
-        password: "",
+        email: null,
+        password: null,
         remember: false,
       },
       isPasswordVisible: false,
@@ -90,19 +90,17 @@ export default {
 
     async login() {
       try {
-        const userAgent = navigator.userAgent;
         const response = await mainURL.post("/login", {
-          nik: this.form.nik,
+          email: this.form.email,
           password: this.form.password,
-          device: userAgent,
         });
 
         if (response.status === 200) {
           this.saveUserDataAndToken(response.data);
-          if (response.data.user.position.role.name=="administrator") {
-            await this.$router.push("/dashboard");
+          if (response.data.user.type==1) {
+            await this.$router.push("/admin/dashboard");
           } else {
-            console.log('else');            
+            this.$showToast("error", "Sorry", "Silahkan coba lagi...");
           }
 
           this.$showToast("success", "Yeay", "Selamat anda berhasil login, mengarahkan ke dashboard.....");

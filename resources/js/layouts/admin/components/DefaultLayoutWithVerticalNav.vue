@@ -1,31 +1,18 @@
 <script setup>
-import VerticalNavSectionTitle from "@/@layouts/components/VerticalNavSectionTitle.vue";
-import upgradeBannerDark from "@images/pro/upgrade-banner-dark.png";
-import upgradeBannerLight from "@images/pro/upgrade-banner-light.png";
 import VerticalNavLayout from "@layouts/components/VerticalNavLayout.vue";
 import VerticalNavLink from "@layouts/components/VerticalNavLink.vue";
-import { useTheme } from "vuetify";
 
 // Components
 import Footer from "@/layouts/admin/components/Footer.vue";
 import NavbarThemeSwitcher from "@/layouts/admin/components/NavbarThemeSwitcher.vue";
 import UserProfile from "@/layouts/admin/components/UserProfile.vue";
 
-const vuetifyTheme = useTheme();
-
-const upgradeBanner = computed(() => {
-  return vuetifyTheme.global.name.value === "light"
-    ? upgradeBannerLight
-    : upgradeBannerDark;
-});
 </script>
 
 <template>
   <VerticalNavLayout>
-    <!-- 👉 navbar -->
     <template #navbar="{ toggleVerticalOverlayNavActive }">
       <div class="d-flex h-100 align-center">
-        <!-- 👉 Vertical nav toggle in overlay mode -->
         <IconBtn
           class="ms-n3 d-lg-none"
           @click="toggleVerticalOverlayNavActive(true)"
@@ -46,12 +33,12 @@ const upgradeBanner = computed(() => {
         :item="{
           title: 'Dashboard',
           icon: 'bx-home',
-          to: '/dashboard',
+          to: '/admin/dashboard',
         }"
       />
 
       <!-- 👉 konfigurasi -->
-      <VerticalNavSectionTitle
+      <!-- <VerticalNavSectionTitle
         :item="{
           heading: 'Konfigurasi Dasar',
         }"
@@ -60,20 +47,6 @@ const upgradeBanner = computed(() => {
         :item="{
           title: 'Kantor',
           icon: 'bx-building',
-          to: '',
-        }"
-      />
-      <!-- <VerticalNavLink
-        :item="{
-          title: 'User',
-          icon: 'bx-user',
-          to: '',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Jabatan',
-          icon: 'bx-area',
           to: '',
         }"
       /> -->
